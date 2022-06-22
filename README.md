@@ -9,14 +9,12 @@
 
 ## Architecture
 
-- Created using Axios, React, React-Bootstrap, JavaScript, CSS, and HTML
-
-- Deployed with Netlify
+- Created using React, JavaScript, and CSS as primary languages. Other tools: Axios, Node.js, NPM, Express.js. And deployed with Netlify
 
 ## Credit and Collaborations
 
-Lab 1: Collaborated with Marvin Bonds.
+Lab 7: Collaborated with Dennis Devris on data flow mapping.
 
 Estimate of time needed to complete: 5 hrs
 
-Actual time needed to complete: 
+Actual time needed to complete: 4 hrs so far...
