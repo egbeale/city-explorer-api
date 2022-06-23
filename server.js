@@ -4,9 +4,7 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-let data = require(./data/weather.json);
-
-let data = require('./data/weather.json');
+const weatherData = require('./data/weather.json');
 
 // ------------- USE ------------
 const app = express();
@@ -16,47 +14,42 @@ const PORT = process.env.PORT || 3002;
 
 //------------- ROUTES --------------
 app.get('/', (request, response) => {
-  response.send('Hello');
+  response.send('Hello from the server.');
 });
-
-
-// ------- weather API ENDPOINT ------
-
-// ------- DEMO. putting here for reference rn -----
-
-// app.get('/pet', (request, response) => {
-//   try {
-//     let speciesFromRequest = request.query.species;
-//     console.log(speciesFromRequest);
-//     let dataToGroom = data.find(pet => pet.species === speciesFromRequest);
-//     let dataToSend = new Pet(dataToGroom);
-//     response.send(dataToSend);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-app.get('/weather', (request, response) => {
-  try {
-    let city = request.query.searchQuery;
-    let forecastObj = data.find(weather => weather.city_name.toLowerCase() === city.toLowerCase());
-    let lat = request.query.lat;
-    let lon = request.query.lon;
-    // no idea what i'm doing! need major help
-    let objArray = forecastObj = data.map(day => new Forecast(day))
-    response.send(objArray);
-  } catch(error) {
-    next(error);
-  }
-})
 
 // ------------ CLASSES ---------
 class Forecast {
-  constructor(forecastObj) {
-    this.date = forecastObj.datetime;
-    this.description = forecastObj.description;
+  constructor(weatherObj) {
+    this.date = weatherObj.datetime;
+    this.description = weatherObj.weather.description;
   }
 }
+
+// ------- weather API ENDPOINT ------
+
+app.get('/weather', (request, response) => {
+  try {
+    const searchQuery = request.query.searchQuery;
+    // defining my endpoint - telling it to be looking for a specific key in the url called searchQuery.
+    // console.log(searchQuery);
+    // when I get the searchQuery, I'm going to run through my weather Data, and find any object where that matches. 
+    const searchCity = weatherData.find(object => object.city_name.toLowerCase() === searchQuery.toLowerCase());
+    console.log(searchCity);
+    // and then because that's another object (with array nested inside), I have to go to that array(.data), since it's an array just map thru it. And for every dayObj, I'm gonna run that thru my Forecast class.
+
+    // let lat = request.query.lat;
+    // let lon = request.query.lon;
+    const result = searchCity.data.map(dayObj => new Forecast(dayObj));
+    console.log(result);
+
+
+    response.send(result);
+    console.log(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 // ----------- HANDLE ERRORS ----------
 app.use((error, request, response, next) => {
@@ -65,7 +58,7 @@ app.use((error, request, response, next) => {
 
 // star method - catch-all for invalid requests
 app.get('*', (request, response) => {
-  response.send('The thing you are looking for does not exist.');
+  response.send('Hmm. Looks like you\'re trying to go somewhere that doesn\'t exist.');
 });
 
 // ------------ LISTENING ----------------
