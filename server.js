@@ -4,13 +4,12 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-// const weatherData = require('./data/weather.json');
+const weatherData = require('./data/weather.json');
 const axios = require('axios');
 
 // ------------- USE ------------
 const app = express();
 app.use(cors());
-// Define PORT and validate that my env is working
 const PORT = process.env.PORT || 3002;
 
 //------------- ROUTES --------------
@@ -36,6 +35,8 @@ app.get('/weather', async (request, response) => {
     let lon = request.query.lon;
     let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&units=I&days=3&lat=${lat}&lon=${lon}`;
     let apiResult = await axios.get(url);
+
+    console.log(apiResult);
 
     let result = apiResult.data.data.map(dayObj => new Forecast(dayObj));
 
