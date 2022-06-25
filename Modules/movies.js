@@ -19,7 +19,7 @@ async function getMovies (request, response) {
 
 class Movies {
   constructor(movieObj) {
-    this.title = movieObj.title;
+    this.title = movieObj.original_title;
   }
 }
 
