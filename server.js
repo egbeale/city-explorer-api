@@ -1,11 +1,11 @@
 'use strict';
 
 // ---------- REQUIRES ---------
-const express = require('express');
 require('dotenv').config();
+const express = require('express');
 const cors = require('cors');
-const getWeather = require('.modules/weather');
-const getMovies = require('.modules/movies');
+const getWeather = require('./modules/weather.js');
+const getMovies = require('./modules/movies.js');
 
 
 // ------------- USE ------------
