@@ -1,3 +1,5 @@
 {
-  "workbench.colorTheme": "Panda Syntax"
+  "workbench.colorTheme": "Panda Syntax",
+  "editor.tabSize": 2,
+  "files.autoSave": "afterDelay"
 }
