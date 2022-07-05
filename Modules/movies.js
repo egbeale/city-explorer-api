@@ -6,7 +6,7 @@ async function getMovies (request, response, next) {
   try {
     // console.log(request.query);
     let location = request.query.location;
-    let url = `https://api.themoviedb.org/3/search/movie/?api_key=${process.env.MOVIE_API_KEY}&langeuage=en-US&page=1&query=${location}`;
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&page=1&query=${location}`;
 
 
     let movieApiResults = await axios.get(url);
